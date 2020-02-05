@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.flamesweb.businesslogic.Flames" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,37 +19,49 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <!-- END BOOTSTRAP SCRIPT MAX CDN  -->
-
 </head>
 <body class="body-bg">
 <%@ include file="navbar.jsp" %>
+<%!
+public static String display(char msg){
+	switch(msg){
+	case 'F':
+		/* System.out.println("She Will became a " +" Friend"); */
+		String f="Friend";
+		return f;
+	case 'L':
+		String l="Lover";
+		return l;
+	case 'A':
+		String a="Affection";
+		return a;
+	case 'M':
+		String m="Marriage";
+		return m;
+	case 'E':
+		String e="Enime";
+		return e;
+	case 'S':
+		String s="Sister";
+		return s;
+	default:
+		String n="None";
+		return n;
+
+	}
+}
+%>
+<% 
+String boyname=request.getParameter("yourname");
+String girlname=request.getParameter("yourlovername");
+int count=Flames.gettingNames(boyname, girlname);
+char flameletter = Flames.getflamesletters(count);
+String msg=display(flameletter);
+%>
 <div class="container">
   <div class="jumbotron">
-    <h1>Flames Web Application</h1>      
-    <p>Check the Flames with who are your Crush..?</p>
+  	<h1><% out.write(boyname+" and "+girlname +" "+"will");%> <b class="msgclr"> <%= msg+"."%></b></h1>      
    </div>    
-</div>
-<div class="container">
-  <form class="form-horizontal" action="displaymessage.jsp">
-    <div class="form-group">
-      <label class="control-label col-sm-2" for="email">Your Name:</label>
-      <div class="col-sm-5">
-        <input type="text" class="form-control" id="email" placeholder="Enter Your Name" name="yourname">
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-sm-2" for="pwd">Your Lover Name:</label>
-      <div class="col-sm-5">          
-        <input type="text" class="form-control" id="pwd" placeholder="Enter Your Lover Name" name="yourlovername">
-      </div>
-    </div>
-    <div class="form-group">        
-      <div class="col-sm-offset-2 col-sm-5">
-        <button type="submit" class="btn btn-danger">Submit</button> 
-        <button type="reset" class="btn btn-danger">Reset</button>
-      </div>
-    </div>
-  </form>
 </div>
 </body>
 </html>
